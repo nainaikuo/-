@@ -1,0 +1,131 @@
+@import "css-reset.scss";
+@import "template.scss";
+
+.content{
+    display: none;
+}
+.chart-title{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: $main;
+}
+.order-list-area{
+    // background: #000;
+    .container-1100{
+        // background: #FFF;
+        display: flex;
+        flex-direction: column;
+        .order-del-all{
+            align-self: end;
+            background: transparent;
+            border: 1px solid $main;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            transition: 0.5s;
+            &:hover{
+                background: $main;
+                color: $white;
+            }
+        }
+        .order-list{
+            margin: 20px 0;
+            .order-id{
+                color: $side;
+                cursor: pointer;
+                &:hover{
+                    color: $main;
+                    text-decoration: underline;
+                }
+            }
+            th,td{
+                border: 1px solid $main;
+                padding: 10px;
+                color: $main;
+                text-align: left;
+                vertical-align: middle;
+                line-height: 1.2;
+            }
+            th{
+                font-weight: 800;
+            }
+            .order-del-btn{
+                background: $red;
+                padding: 5px 8px;
+                color: $white;
+
+            }
+            .order-paid-btn{
+                background: $deep-side;
+                padding: 5px 8px;
+                color: $white;
+            }
+        }
+    }
+
+}
+
+
+.message{
+    text-align: center;
+    font-size: 40px;
+    letter-spacing: 2px;
+    color: $main;
+}
+
+.order-detail{
+    display: none;
+    position: absolute;
+    top:25%;
+    left: 25%;
+    background: $white;
+    width: 50%;
+    color: $main;
+    box-shadow:  0 0 40px $main;
+    .title{
+        background: $main;
+        color: $white;
+        padding: 20px;
+
+    }
+    .detail{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+
+        .info{
+            display: flex;
+            flex-wrap: wrap;
+            li{
+                width: 50%;
+                padding: 10px;
+            }
+            li.address{
+                width: 100%;
+            }
+        }
+        .product-list{
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #000;
+            th,td{
+                text-align: center;
+                padding: 10px;
+            }
+            tr{
+                border-bottom: 1px solid #000;
+            }
+        }
+        .order-detail-close{
+            background: $deep-side;
+            color: $white;
+            align-self: center;
+            padding: 10px 15px;
+        }
+    }
+}
+
+
+

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>後台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css" integrity="sha512-GQSxWe9Cj4o4EduO7zO9HjULmD4olIjiQqZ7VJuwBxZlkWaUFGCxRkn39jYnD2xZBtEilm0m4WBG7YEmQuMs5Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="css/backstage.css">
+</head>
+<body>
+    <div class="header">
+        <div class="container-1100">
+            <div class="logo"><h1>WOWOROOM</h1></div>
+            <div class="menu">
+                <ul>
+                    <li><a href="#">後臺管理</a></li>
+                    <li><a href="#" class="side">管理員登入</a></li>
+                </ul>
+            </div>
+            <div class="nav">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="nav-menu none">
+                <ul>
+                    <li><a href="#advantage">床墊優勢</a></li>
+                    <li><a href="#recommend">好評推薦</a></li>
+                    <li><a href="#shipping">運送方式</a></li>
+                    <li><a class="side" href="#products">立即預訂</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p class="message"></p>
+    <div class="content">
+        <h3 class="chart-title">全產品類別營收比重</h3>
+        <div class="chart">
+            
+        </div>
+        <div class="order-list-area">
+            <div class="container-1100">
+                <button class="order-del-all">清除全部訂單</button>
+                <table class="order-list">
+                    <thead>
+                        <tr>
+                            <th>訂單編號</th>
+                            <th>聯絡人</th>
+                            <th>聯絡地址</th>
+                            <th>電子郵件</th>
+                            <th>訂單金額</th>
+                            <th>訂單日期</th>
+                            <th>訂單狀態</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="js-order-table">
+                        
+                    </tbody>
+                    
+                </table>
+            </div>
+           
+        </div>
+    </div>
+
+    <div class="order-detail">
+        <div class="title"><h3>訂單詳細</h3></div>
+        <div class="detail">
+            <ul class="info">
+                <li>訂單編號：${i.createdAt}</li>
+                <li>訂單日期：${i.createdAt}</li>
+                <li>聯絡人：${i.user.name}</li>
+                <li>連絡電話：${i.user.tel}</li>
+                <li class="address">聯絡地址：${i.user.address}</li>
+                <li>付款方式：${i.user.payment}</li>
+                <li>訂單狀態：${orderStatus}</li>
+            </ul>
+            <table class="product-list">
+                <thead>
+                    <tr>
+                        <th>項次</th>
+                        <th>名稱</th>
+                        <th>數量</th>
+                        <th>金額</th>
+                        <th>小計</th>
+                    </tr>
+                </thead>
+                <tbody class="js-product-list">
+                    <tr>
+                        <td>1</td>
+                        <td>fkdsl;lgds</td>
+                        <td>2</td>
+                        <td>21321</td>
+                        <td>635543</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="order-detail-close">關閉</button>
+        </div>
+        
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.4.0/d3.min.js" integrity="sha512-xCjYfcg+NUYXEKc6fhQh2e8rTXKALVQnIn+RBtRniz4GrnRXcx+SIZtYjBZI3/LPS1+8AoRryBveRTtHM4IDOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.js" integrity="sha512-11Z4MD9csmC3vH8Vd0eIPJBQu3uEHEqeznWEt3sLBCdQx3zm9mJbBcJH8WTcyGY9EXDE81BNpjE2vLosPK8cFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/backstage.js"></script>
+</body>
+</html>
