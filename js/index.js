@@ -1,5 +1,7 @@
+const api_url = "https://livejs-api.hexschool.io/api"
 const api_path = "nai"
 const token = "6B0Yu28b3MNL8rTZpDUX5sMzohE3"
+
 let productData ;
 let cartData ;
 
@@ -16,7 +18,7 @@ function init(){
 }
 
 function getProdcutData(){
-    axios.get(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/products`
+    axios.get(`${api_url}/livejs/v1/customer/${api_path}/products`
     )
     .then(res => {
         productData = res.data.products
@@ -46,7 +48,7 @@ function renderProduct(data){
 }
 
 function getCartData(){
-    axios.get(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/carts`)
+    axios.get(`${api_url}/livejs/v1/customer/${api_path}/carts`)
     .then(res => {
         cartData = res.data
         renderCart()
@@ -106,7 +108,7 @@ function addCart(e){
         let hasThisProduct = false;
         // 空陣列不能直接跑forEach，所以如果購物車列表為空則直接加入商品
         if(cartList.length===0){
-            axios.post(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/carts`,{"data": {"productId": productId,"quantity": 1}})
+            axios.post(`${api_url}/livejs/v1/customer/${api_path}/carts`,{"data": {"productId": productId,"quantity": 1}})
                 .then(res=>{
                 cartData = res.data
                 informAddSuccess()
@@ -121,7 +123,7 @@ function addCart(e){
                 // 若找到相同的ID則代表購物車已有此商品
                 hasThisProduct = true;
                 // 用patch修改商品數量
-                axios.patch(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/carts`,{"data": {"id": i.id,"quantity":i.quantity+1}})
+                axios.patch(`${api_url}/livejs/v1/customer/${api_path}/carts`,{"data": {"id": i.id,"quantity":i.quantity+1}})
                 .then(res=>{
                     cartData = res.data
                     informAddSuccess()
@@ -132,7 +134,7 @@ function addCart(e){
         if(hasThisProduct){
             return;
         }
-        axios.post(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/carts`,{"data": {"productId": productId,"quantity": 1}})
+        axios.post(`${api_url}/livejs/v1/customer/${api_path}/carts`,{"data": {"productId": productId,"quantity": 1}})
         .then(res=>{
         cartData = res.data
         informAddSuccess()
@@ -146,7 +148,7 @@ function addCart(e){
 function delCart(e){
     if(e.target.classList.contains("del-btn")){
         let id = e.target.dataset.id
-        axios.delete(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/carts/${id}`)
+        axios.delete(`${api_url}/livejs/v1/customer/${api_path}/carts/${id}`)
         .then(res=>{
             cartData = res.data
             renderCart()
@@ -168,7 +170,7 @@ function delCartAll(e){
         cancelButtonText: '先不要',
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/carts`)
+            axios.delete(`${api_url}/livejs/v1/customer/${api_path}/carts`)
             .then(res=>{
                 cartData = res.data
                 renderCart()
@@ -197,7 +199,7 @@ function creatOrder(e){
 
     console.log(orderData);
 
-    axios.post(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/orders`,{
+    axios.post(`${api_url}/livejs/v1/customer/${api_path}/orders`,{
         "data": {
           "user": orderData
         }
@@ -234,7 +236,6 @@ function informOrderFail(){
         text: '尚未將商品加入購物車，再去逛逛吧！',
         confirmButtonColor: '#4d6069',
         confirmButtonText:"買起來！"
-        // footer: '<a href="">Why do I have this issue?</a>'
       })
 }
 
@@ -284,7 +285,17 @@ function editCart(e){
     if(e.target.nodeName==="INPUT"){
         let quantity = parseInt(e.target.value)
         let id = e.target.dataset.id
-        axios.patch(`https://livejs-api.hexschool.io/api/livejs/v1/customer/${api_path}/carts`,{"data": {"id": id,"quantity":quantity}})
+        if(quantity <= 0 ){
+            console.log("刪除");
+            axios.delete(`${api_url}/livejs/v1/customer/${api_path}/carts/${id}`)
+        .then(res=>{
+            cartData = res.data
+            renderCart()
+             })
+            return;
+        }
+        
+        axios.patch(`${api_url}/livejs/v1/customer/${api_path}/carts`,{"data": {"id": id,"quantity":quantity}})
                 .then(res=>{
 
                     cartData = res.data

@@ -251,12 +251,13 @@ li {
   border: 1px solid #4d6069;
   padding: 10px;
   color: #4d6069;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
-  line-height: 1.2;
+  line-height: 1.5;
 }
 .order-list-area .container-1100 .order-list th {
   font-weight: 800;
+  text-align: center;
 }
 .order-list-area .container-1100 .order-list .order-del-btn {
   background: #C44021;

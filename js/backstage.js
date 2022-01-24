@@ -3,7 +3,11 @@
 
 const api_path = "nai"
 const token = "6B0Yu28b3MNL8rTZpDUX5sMzohE3"
-
+const config = {
+    headers: {
+      'Authorization': token
+    }
+    }
 let orderData ; 
 const orderTable = document.querySelector(".js-order-table")
 const delAllOrderBtn = document.querySelector(".order-del-all")
@@ -15,18 +19,14 @@ function init(){
 }
 
 function getOrderData(){
-    axios.get(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders`,{
-        headers: {
-          'Authorization': token
-        }
-      })
+    axios.get(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders`,config)
     .then(res => {
         orderData = res.data.orders ;
         
         renderOrder()
     })
     .catch(err => {
-        console.log(err); 
+        // console.log(err); 
     })
 }
 
@@ -46,12 +46,15 @@ function renderOrder(){
     
     orderData.forEach(i=>{
         let orderStauts ;
-
-        if(i.paid === false){
-            orderStatus = "未付款"
-        }else{
+        // console.log(i.paid);
+        if(i.paid===true){
             orderStatus = "已付款"
+            
+        }else{
+            orderStatus = "未付款"
         }
+
+        // console.log(orderStatus);
 
         orderTableContent +=`
                     <tr>
@@ -59,16 +62,17 @@ function renderOrder(){
                         <td>${i.user.name}<br>0912345678</td>
                         <td>${i.user.address}</td>
                         <td>${i.user.email}</td>
-                        <td>${i.total}</td>
+                        <td>${i.total}元</td>
                         <td>${i.createdAt}</td>
                         <td>${orderStatus}</td>
                         <td><button class="order-del-btn" data-id="${i.id}">刪除</button>
-                        <button class="order-paid-btn" data-id="${i.id}">已付款</button></td>
+                        <button class="order-paid-btn" data-id="${i.id}" data-paid = "${i.paid}">更改付款狀態</button></td>
                     </tr>
         
         `
+        
     })
-
+    // console.log(orderTableContent);
     orderTable.innerHTML = orderTableContent
 
 }
@@ -116,7 +120,7 @@ function renderChart(chartData){
 }
 
 
-function delOrder(e){
+function editOrder(e){
     if(e.target.classList.contains("order-del-btn")){
         
         let id = e.target.dataset.id
@@ -132,11 +136,7 @@ function delOrder(e){
             cancelButtonText: '先不要',
           }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders/${id}`,{
-                    headers: {
-                      'Authorization': token
-                    }
-                    })
+                axios.delete(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders/${id}`,config)
                     .then(res=>{
                         orderData = res.data.orders
                         renderOrder()
@@ -149,11 +149,7 @@ function delOrder(e){
     }
     if(e.target.classList.contains("order-id")){
         let orderId = e.target.dataset.id
-        axios.get(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders`,{
-        headers: {
-          'Authorization': token
-        }
-        })
+        axios.get(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders`,config)
         .then(res => {
 
         orderData = res.data.orders ;
@@ -162,20 +158,23 @@ function delOrder(e){
     })
     }
     if(e.target.classList.contains("order-paid-btn")){
-        let id = e.target.dataset.id
-        console.log(id);
+        let id = e.target.dataset.id;
+        let isPaid  = e.target.dataset.paid
+        let paidStatus
+        if(isPaid === "true"){
+            paidStatus = false
+        }else{
+            paidStatus = true
+        }
+        
         axios.put(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders`,
     {
       "data": {
         "id": id,
-        "paid": true
+        "paid": paidStatus
       }
     },
-    {
-      headers: {
-        'Authorization': token
-      }
-    })
+    config)
     .then(res=>{
         orderData = res.data.orders
         informEditSuccess()
@@ -251,11 +250,7 @@ function delAllOrder(){
         cancelButtonText: '先不要',
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders`,{
-        headers: {
-          'Authorization': token
-        }
-        })
+            axios.delete(`https://livejs-api.hexschool.io/api/livejs/v1/admin/${api_path}/orders`,config)
         .then(res=>{
             orderData = res.data.orders
             renderOrder()
@@ -285,7 +280,7 @@ function closeWindow() {
 }
 
 
-orderTable.addEventListener("click",delOrder)
+orderTable.addEventListener("click",editOrder)
 delAllOrderBtn.addEventListener("click",delAllOrder)
 orderDetailClose.addEventListener("click",closeWindow)
 
